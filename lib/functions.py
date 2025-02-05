@@ -16,12 +16,6 @@ def yfinance_average_ROI(ticker,property) :
         earninngs = yf.Ticker(ticker).financials.dropna(axis = 1, how = 'all')
         earninngs = earninngs.T
         earninngs = earninngs[property]
-        # averagegrowth = ((earninngs[0] - earninngs[-1]) / earninngs[-1])/ len(earninngs)
-        averagegrowth = ( earninngs - earninngs.shift(-1))/earninngs
-        averagegrowth = averagegrowth.dropna()
-        avggrowth = averagegrowth.mean()
-        # print(earninngs.shift(-1))
-        # print(earninngs)
 
 
         data = pd.DataFrame()
@@ -31,7 +25,8 @@ def yfinance_average_ROI(ticker,property) :
         data['avg_MF_ROC'] = data[property]/data['Invested Capital']
         avg_MF_ROC = data['avg_MF_ROC'].mean()
         avg_MF_ROC = np.round(avg_MF_ROC,4)
-        return avg_MF_ROC, avggrowth
+
+        return avg_MF_ROC
     except:
         return None
     
